@@ -5,6 +5,8 @@ import GoodsList from './GoodsList';
 import Search from './Search';
 
 import { goods } from '../data/goods';
+import Header from './Header';
+import { Container } from '@mui/material';
 
 const App = () => {
     const [order, setOrder] = useState([]);
@@ -36,26 +38,26 @@ const App = () => {
             quantity = order[indexInOrder].quantity + 1;
 
             setOrder(order.map((item) => {
-                    if (item.id !== goodsItem.id) return item;
+                if (item.id !== goodsItem.id) return item;
 
-                    return {
-                        id: item.id,
-                        name: item.name,
-                        price: item.price,
-                        quantity,
-                    };
-                }),
+                return {
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity,
+                };
+            }),
             );
         } else {
             setOrder([
-                    ...order,
-                    {
-                        id: goodsItem.id,
-                        name: goodsItem.name,
-                        price: goodsItem.price,
-                        quantity,
-                    },
-                ],
+                ...order,
+                {
+                    id: goodsItem.id,
+                    name: goodsItem.name,
+                    price: goodsItem.price,
+                    quantity,
+                },
+            ],
             );
         }
     };
@@ -65,8 +67,9 @@ const App = () => {
     };
 
     return (
-        <div className='App'>
-            <div className='container'>
+        <>
+            <Header />
+            <Container sx={{ mt: '1rem'}}>
                 <Search
                     value={search}
                     onChange={handleChange}
@@ -79,8 +82,8 @@ const App = () => {
                     order={order}
                     setOrder={removeFromOrder}
                 />
-            </div>
-        </div>
+            </Container>
+        </>
     );
 }
 
