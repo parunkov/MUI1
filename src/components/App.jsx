@@ -70,7 +70,7 @@ const App = () => {
 
     return (
         <>
-            <Header handleCart={() => setCartOpen(true)} />
+            <Header handleCart={() => setCartOpen(true)} orderLen={order.length} />
             <Container sx={{ mt: '1rem'}}>
                 <Search
                     value={search}
@@ -80,12 +80,13 @@ const App = () => {
                     goods={products}
                     setOrder={addToOrder}
                 />
-                <BasketList
-                    order={order}
-                    setOrder={removeFromOrder}
-                />
             </Container>
-            <Basket cartOpen={isCartOpen} closeCart={() => setCartOpen(false)} />
+            <Basket 
+                cartOpen={isCartOpen} 
+                order={order} 
+                removeFromOrder={removeFromOrder} 
+                closeCart={() => setCartOpen(false)} 
+            />
         </>
     );
 }

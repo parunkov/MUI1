@@ -1,17 +1,36 @@
 import { ShoppingBasket } from "@mui/icons-material";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import BasketItem from './BasketItem';
 
 const Basket = (props) => {
-    const { cartOpen, closeCart = Function.prototype, order, removeFromOrder } = props;
+    const { cartOpen, closeCart = Function.prototype, order = [], removeFromOrder } = props;
     return (
         <Drawer anchor="right" open={cartOpen} onClose={closeCart}>
-            <List>
+            <List sx={{ width: '400px' }}>
                 <ListItem>
                     <ListItemIcon>
                         <ShoppingBasket />
-                    </ListItemIcon>  
-                    <ListItemText primary="Корзина" /> 
-                </ListItem> 
+                    </ListItemIcon>
+                    <ListItemText primary="Корзина" />
+                </ListItem>
+                <Divider />
+                {!order.length ? (
+                    <ListItem>Корзина пуста!</ListItem>
+                ) : (
+                    <> 
+                        {order.map((item) => (
+                            <BasketItem key={item.name} removeFromOrder={removeFromOrder} {...item} />
+                            ))}
+                        <Divider />
+                        <ListItem>
+                            <Typography sx={{fontWeight: 700}}>
+                                Общая стоимость:{' '}
+                                {order.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+                                {' рублей'}
+                            </Typography>
+                        </ListItem>
+                    </>
+                )}
             </List>
         </Drawer>
     )
